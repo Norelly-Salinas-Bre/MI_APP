@@ -3,11 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\AbogadoController;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/clients/export', [ClientController::class, 'export'])->name('clients.export');
     Route::resource('clients', ClientController::class);
-    
+
 });
 // Página principal
 Route::get('/', function () {
@@ -32,5 +33,10 @@ Route::middleware(['auth'])->group(function () {
     //Exportar clientes a Excel
     Route::get('clients/export', [ClientController::class, 'export'])->name('clients.export');
 });
+Route::middleware(['auth', 'abogado'])->group(function () {
+    Route::get('/abogado/dashboard', [AbogadoController::class, 'dashboard'])->name('abogado.dashboard');
+});
+
 
 require __DIR__.'/auth.php';
+

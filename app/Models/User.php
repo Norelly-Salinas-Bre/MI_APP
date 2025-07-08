@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function legalCases()
+    {
+        return $this->hasMany(LegalCase::class, 'assigned_to');
+    }
 }

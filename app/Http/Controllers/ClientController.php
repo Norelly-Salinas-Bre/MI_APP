@@ -14,9 +14,9 @@ class ClientController extends Controller
         $search = $request->search;
 
         $clients = Client::when($search, function ($query, $search) {
-                $query->where('first_name', 'ILIKE', "%$search%")
-                      ->orWhere('last_name', 'ILIKE', "%$search%")
-                      ->orWhere('document_number', 'ILIKE', "%$search%");
+                $query  ->where('first_name', 'ILIKE', "%$search%")
+                        ->orWhere('last_name', 'ILIKE', "%$search%")
+                        ->orWhere('document_number', 'ILIKE', "%$search%");
             })->latest()->paginate(10)->withQueryString();
 
         return view('clients.index', compact('clients', 'search'));
@@ -81,3 +81,4 @@ class ClientController extends Controller
         return redirect()->route('clients.index')->with('success', 'Cliente eliminado correctamente.');
     }
 }
+
