@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -12,6 +13,7 @@ class DatabaseSeeder extends \Illuminate\Database\Seeder
         // Crear rol de administrador
         $adminRole = Role::firstOrCreate(['name' => 'Administrador']);
 
+
         // Crear un usuario con ese rol
         User::create([
             'name' => 'Administrador',
@@ -20,6 +22,18 @@ class DatabaseSeeder extends \Illuminate\Database\Seeder
             'password' => Hash::make('admin123'), // Puedes cambiar la clave
             'remember_token' => Str::random(10),
             'role_id' => $adminRole->id,
+
+        //User::factory()->create([
+          //  'name' => 'Test User',
+            //'email' => 'test@example.com',
+        //]);
+
+        $this->call([
+            RoleSeeder::class,        // Primero los roles
+            AdminUserSeeder::class,   // Después los usuarios
+
         ]);
+
     }
+
 }
