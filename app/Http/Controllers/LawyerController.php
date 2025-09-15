@@ -186,6 +186,19 @@ class LawyerController extends Controller
         }
     }
 
+
+        } catch (\Exception $e) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al eliminar abogado',
+                    'error' => $e->getMessage()
+                ], 500);
+            }
+            return back()->with('error', 'Error al eliminar abogado: ' . $e->getMessage());
+        }
+    }
+
     public function exportPDF()
     {
         $lawyers = Lawyer::orderBy('nombre')->get();
@@ -196,4 +209,4 @@ class LawyerController extends Controller
 
         return $pdf->download('listado_abogados.pdf');
     }
-}
+
